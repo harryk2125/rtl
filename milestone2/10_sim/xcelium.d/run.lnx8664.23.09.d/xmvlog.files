@@ -1,0 +1,19 @@
+//
+// File created by:  xrun
+// Do not modify this file
+//
+/earth/class/comp/comp0u21/Documents/milestone2/00_src/singlecycle.sv
+/earth/class/comp/comp0u21/Documents/milestone2/00_src/add.sv
+/earth/class/comp/comp0u21/Documents/milestone2/00_src/alu.sv
+/earth/class/comp/comp0u21/Documents/milestone2/00_src/brcomp.sv
+/earth/class/comp/comp0u21/Documents/milestone2/00_src/controlunit.sv
+/earth/class/comp/comp0u21/Documents/milestone2/00_src/immgen.sv
+/earth/class/comp/comp0u21/Documents/milestone2/00_src/inst_memory.sv
+/earth/class/comp/comp0u21/Documents/milestone2/00_src/lsu.sv
+/earth/class/comp/comp0u21/Documents/milestone2/00_src/lsu_2d_bank.sv
+/earth/class/comp/comp0u21/Documents/milestone2/00_src/lsu_2d_op_bank.sv
+/earth/class/comp/comp0u21/Documents/milestone2/00_src/lsu_2d_ip_bank.sv
+/earth/class/comp/comp0u21/Documents/milestone2/00_src/mux221.sv
+/earth/class/comp/comp0u21/Documents/milestone2/00_src/pc.sv
+/earth/class/comp/comp0u21/Documents/milestone2/00_src/regfile.sv
+/earth/class/comp/comp0u21/Documents/milestone2/00_src/wbmux.sv

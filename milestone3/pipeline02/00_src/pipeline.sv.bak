@@ -1,0 +1,91 @@
+module pipeline
+(
+  //INPUT
+  input logic [31:0]  io_sw_i   ,  
+  //OUTPUT
+  output logic [31:0] io_lcd_o  ,
+  output logic [31:0] io_ledg_o ,
+  output logic [31:0] io_ledr_o ,
+  output logic [31:0] io_hex0_o ,
+  output logic [31:0] io_hex1_o ,
+  output logic [31:0] io_hex2_o ,
+  output logic [31:0] io_hex3_o ,
+  output logic [31:0] io_hex4_o ,
+  output logic [31:0] io_hex5_o ,
+  output logic [31:0] io_hex6_o ,
+  output logic [31:0] io_hex7_o ,
+
+  input logic         clk_i     ,
+  input logic         rst_ni
+);
+	logic [3:0]hz_o;
+	
+	logic [31:0]alu_pc, add_pc, muxpc_pc;
+	logic br_sel_dmuxpc;	
+	mux221 muxpc (add_pc, alu_pc, br_sel_dmuxpc, muxpc_pc);
+	
+	logic [31:0]pc_ff;
+	pc pcc (muxpc_pc, clk_i, rst_ni, pc_ff);
+	
+	logic hz_ff;
+	flipflop ff (clk_i, rst_ni, pc_ff, hz_o[0]);
+	
+	logic [31:0]ff_ins, ins_ifid;
+	inst_memory inst (ff_ins, ins_ifid, clk_i, rst_ni);
+	
+	logic [31:0]idif_ins, idif_pc;
+	IF_ID ifid (clk_i, rst_ni, hz_o[2:1], ff_ins, ins_ifid, idif_ins, idif_pc);  
+	
+	logic [31:0]imm_idex;
+	immgen imm (idif_ins, imm_idex);
+	
+	logic wb_rdwren;
+	logic [4:0]wb_rdaddr;
+	logic [31:0]wb_rddata, rs1_idex, rs2_idex;
+	regfile rf(clk_i, rst_ni, wb_rdwren, idif_ins[19:15], idif_ins[24:20], rdaddr, wb_rddata, rs1_idex, rs2_idex);
+	
+	logic br_unsigned, br_less, br_equal;
+	brcomp brc (rs1_idex, rs2_idex, br_unsigned, br_less, br_equal);
+	
+	logic brsel_idex, rdwren_idex, opasel_idex, opbsel_idex, memwwren_idex;
+	logic [4:0]alusel_idex;
+	logic [2:0]fun_idex; 
+	logic [1:0]wbsel_idex;
+	controlunit ctrl (idif_ins, br_less, br_equal, brsel_idex, br_unsigned, rdwren_idex, opasel_idex, opbsel_idex, alusel_idex, memwwren_idex, fun_idex, wbsel_idex);
+	
+	logic opasel, opbsel, brsel_exmem, memwren_exmem, rdwren_exmem;
+	logic [4:0]rdaddr_exmem;
+	logic [3:0]opalu;
+	logic [2:0]fun_exmem;
+	logic [1:0]wbsel_exmem;
+	logic [31:0]pcmux, immmux, rs1mux, rs2mux;
+	ID_EX idex (clk_i, rst_ni, hz[3], opasel_idex, opbsel_idex, alusel_idex, brsel_idex, memwwren_idex, fun_idex, wbsel_idex, rdwren_idex, idif_ins[11:7], idif_pc, imm_idex, rs1_idex, rs2_idex, 
+					opasel, opbsel, opalu, brsel_exmem, memwren_exmem, fun_exmem, wbsel_exmem, rdwren_exmem, rdaddr_exmem, pcmux, immmux, rs1mux, rs2mux);
+	
+	logic [31:0]opa_alu;
+	mux221 muxopa (rs1mux, pcmux, opasel, opa_alu);
+	
+	logic [31:0]opb_alu;
+	mux221 muxopb (rs2mux, immmux, opbsel, opb_alu);
+	
+	logic [31:0]alu_exmem;
+	alu aluu (opa_alu, opb_alu, opalu, alu_exmem);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+endmodule	

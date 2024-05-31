@@ -1,0 +1,12 @@
+module wrapper (
+	input logic CLOCK_50,
+	input logic [0:0] SW,
+	
+	output logic [6:0] HEX0
+);
+
+singlecycle sc_dut(
+	.clk_i		(CLOCK_50)
+	.rst_ni		(SW[0])
+	.io_hex0_o	(HEX)
+);

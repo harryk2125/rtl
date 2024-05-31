@@ -1,0 +1,57 @@
+xrun(64): 23.09-s003: (c) Copyright 1995-2023 Cadence Design Systems, Inc.
+TOOL:	xrun(64)	23.09-s003: Started on Apr 20, 2024 at 02:04:17 +07
+xrun
+	-f filelist
+		../00_src/singlecycle.sv
+		../00_src/add.sv
+		../00_src/alu.sv
+		../00_src/brcomp.sv
+		../00_src/controlunit.sv
+		../00_src/immgen.sv
+		../00_src/inst_memory.sv
+		../00_src/lsu.sv
+		../00_src/lsu_2d_bank.sv
+		../00_src/lsu_2d_op_bank.sv
+		../00_src/lsu_2d_ip_bank.sv
+		../00_src/mux221.sv
+		../00_src/pc.sv
+		../00_src/regfile.sv
+		../00_src/wbmux.sv
+Recompiling... reason: file '../00_src/regfile.sv' is newer than expected.
+	expected: Sat Apr 20 01:57:15 2024
+	actual:   Sat Apr 20 02:04:03 2024
+file: ../00_src/regfile.sv
+	module worklib.reg32:sv
+		errors: 0, warnings: 0
+		Caching library 'worklib' ....... Done
+	Elaborating the design hierarchy:
+	Top level design units:
+		singlecycle
+	.paddr_i		(pc),
+	        		  |
+xmelab: *W,CUVMPW (../00_src/singlecycle.sv,63|13): port sizes differ in port connection(32/13) for the instance(singlecycle) .
+	Building instance overlay tables: .................... Done
+	Generating native compiled code:
+		worklib.reg32:sv <0x7050e93f>
+			streams:   2, words:   900
+	Building instance specific data structures.
+	Loading native compiled code:     .................... Done
+	Design hierarchy summary:
+		                  Instances  Unique
+		Modules:                 97      26
+		Registers:              188     112
+		Scalar wires:            77       -
+		Vectored wires:         327       -
+		Always blocks:           91      21
+		Initial blocks:           5       5
+		Cont. assignments:       18      35
+		Pseudo assignments:     215       -
+		Process Clocks:           5       1
+		Simulation timescale:  10ps
+	Writing initial simulation snapshot: worklib.singlecycle:sv
+Loading snapshot worklib.singlecycle:sv .................... Done
+xcelium> source /moon/cadence/XCELIUM2309/tools/xcelium/files/xmsimrc
+xcelium> run
+xmsim: *W,RNQUIE: Simulation is complete.
+xcelium> exit
+TOOL:	xrun(64)	23.09-s003: Exiting on Apr 20, 2024 at 02:04:19 +07  (total: 00:00:02)

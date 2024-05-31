@@ -1,0 +1,25 @@
+module brach_taken(
+	 input logic [6:0]branch_opcode,//
+	 input logic [31:0]idif_pc,//
+	 input logic [4:0]idif_rs1addr,//
+	 input logic [31:0]rs1data_idex,
+	 input logic [4:0]idex_rdaddr,//
+	 input logic idex_rdwren,
+	 input logic [31:0]alu_exmem,//
+	 input logic [4:0]exmem_rdaddr,
+	 input logic exmem_rdwren,
+	 input logic [31:0]exmem_alu,//
+	 input [31:0]imm_taken,//
+	 output [31:0]pc_taken	//
+	);
+	
+	logic [31:0]data;
+	assign data = ((idex_rdwren) && (idex_rdaddr != 0) && (idex_rdaddr == idif_rs1addr)) ? alu_exmem :
+						((exmem_rdwren) && (exmem_rdaddr != 0) && (exmem_rdaddr == idif_rs1addr)) ? exmem_alu: 
+						rs1data_idex;
+	
+	assign pc_taken = (branch_opcode == 7'b1100011 || branch_opcode == 7'b1101111) ? (idid_pc + imm_taken) :  (branch_opcode == 7'b1100111) ? (data + imm_taken) : 14'b0;
+	
+endmodule
+
+	
